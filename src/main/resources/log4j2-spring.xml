@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="PID">????</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${LOG_LEVEL_PATTERN}} %clr{}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD}</Property>
+        <Property name="FILE_LOG_PATTERN">%d{${LOG_DATEFORMAT_PATTERN}} ${LOG_LEVEL_PATTERN} --- [%t] %-40.40c{1.} : %m%n${LOG_EXCEPTION_CONVERSION_WORD}</Property>
+        <Property name="LOG_FILE_PATH">/home/tomcat/logs</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}" />
+            <!--<JsonLayout/>-->
+        </Console>
+        <RollingFile name="File" fileName="${LOG_FILE_PATH}/prn-auth-service.log" filePattern="${LOG_FILE_PATH}/$${date:yyyy-MM}/prn-auth-service-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout>
+                <Pattern>${FILE_LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+        <!-- json log -->
+        <!--<RollingFile name="File" fileName="${LOG_FILE_PATH}/prn-auth-service.log" filePattern="${LOG_FILE_PATH}/$${date:yyyy-MM}/prn-auth-service-%d{yyyy-MM-dd-HH}-%i.log">-->
+            <!--<JsonLayout/>-->
+            <!--<Policies>-->
+                <!--<TimeBasedTriggeringPolicy/>-->
+                <!--<SizeBasedTriggeringPolicy size="100000 kb"/>-->
+            <!--</Policies>-->
+            <!--&lt;!&ndash; DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 &ndash;&gt;-->
+            <!--<DefaultRolloverStrategy max="100"/>-->
+        <!--</RollingFile>-->
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.catalina.startup.DigesterFactory" level="error"/>
+        <Logger name="org.apache.catalina.util.LifecycleBase" level="error"/>
+        <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn"/>
+        <logger name="org.apache.sshd.common.util.SecurityUtils" level="warn"/>
+        <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn"/>
+        <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error"/>
+        <logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+        <Logger name="com.prnasia" level="debug"/>
+        <Logger name="org.hibernate.SQL" level="debug"/>
+        <logger name="org.hibernate.engine.QueryParameters" level="DEBUG"/>
+        <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+        <logger name="io.seata" level="ERROR"/>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
